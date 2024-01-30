@@ -7,7 +7,15 @@ public class User {
     private String name;
     private int age;
     private String email;
+    private String password;
 
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
     public User() {
         this.id = UUID.randomUUID();

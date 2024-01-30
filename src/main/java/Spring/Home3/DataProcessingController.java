@@ -4,10 +4,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -15,9 +12,11 @@ import java.util.List;
 @RequestMapping("/api")
 public class DataProcessingController {
     private final DataProcessingService dataProcessingService;
+    private final AuthorisationService authorisationService;
 
-    public DataProcessingController(DataProcessingService dataProcessingService) {
+    public DataProcessingController(DataProcessingService dataProcessingService,AuthorisationService authorisationService) {
         this.dataProcessingService = dataProcessingService;
+        this.authorisationService = authorisationService;
     }
 
     @RequestMapping(value = "/hello", method = RequestMethod.GET)
@@ -37,5 +36,14 @@ public class DataProcessingController {
     @RequestMapping(value = "/calc", method = RequestMethod.GET)
     public ResponseEntity<Double> calc(@RequestBody List<User> users){
         return new ResponseEntity<>(dataProcessingService.calculateAverageAge(users),HttpStatus.OK);
+    }
+
+
+    @RequestMapping(value = "/auth", method = RequestMethod.POST)
+    public ResponseEntity<String> authorisationUser(@RequestParam String name,@RequestParam String email, @RequestParam String password){
+       if(authorisationService.getAcces(name,email,password)){
+           return new ResponseEntity<>(authorisationService.successfulLogin(name,email),HttpStatus.ACCEPTED);
+       }else
+           return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 }
