@@ -21,6 +21,7 @@ public class AuthorisationService {
     }
 
     public String successfulLogin(String name, String email) {
+
         return "Вы успешно зашли под логином " + name + " ваша почта: " + email;
     }
 }

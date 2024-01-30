@@ -9,6 +9,7 @@ public class NotificationService {
         System.out.println("A new user has been created: " + user.getName());
 
     }
+    // Добавлен метод при не удачной авторизации.
     public void badnotifyUser(User user){
         System.out.println("Cannot create user, User already created  " + user.getName() );
     }

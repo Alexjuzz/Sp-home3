@@ -17,6 +17,7 @@ public class RegisteredService {
         this.userService = userService;
     }
 
+    // Кустарный метод для  проверки валидности данных
     public User registerNewUser(String name, int age, String email,String password) {
         if (name == null || name.trim().isEmpty()) {
             throw new IllegalArgumentException("Имя не может быть пустым");
@@ -28,7 +29,6 @@ public class RegisteredService {
             throw new IllegalArgumentException("Некорректный адрес электронной почты");
         }
         User newUser = userService.createUser(name, age, email,password);
-
         users.addUser(newUser);
         return newUser;
     }

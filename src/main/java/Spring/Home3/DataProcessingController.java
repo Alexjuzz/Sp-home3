@@ -19,6 +19,7 @@ public class DataProcessingController {
         this.authorisationService = authorisationService;
     }
 
+    //region методы с лекции
     @RequestMapping(value = "/hello", method = RequestMethod.GET)
     public ResponseEntity<String> hello() {
         String response = this.dataProcessingService.getGreeting();
@@ -37,13 +38,16 @@ public class DataProcessingController {
     public ResponseEntity<Double> calc(@RequestBody List<User> users){
         return new ResponseEntity<>(dataProcessingService.calculateAverageAge(users),HttpStatus.OK);
     }
+    //endregion
 
-
+    //region метода для работы с авторизацией.  **  Не разобрался как отобразить строку в браузере.
     @RequestMapping(value = "/auth", method = RequestMethod.POST)
     public ResponseEntity<String> authorisationUser(@RequestParam String name,@RequestParam String email, @RequestParam String password){
        if(authorisationService.getAcces(name,email,password)){
-           return new ResponseEntity<>(authorisationService.successfulLogin(name,email),HttpStatus.ACCEPTED);
+           String response = authorisationService.successfulLogin(name,email);
+           return new ResponseEntity<>(response,HttpStatus.ACCEPTED);
        }else
            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
+    //endregion
 }
